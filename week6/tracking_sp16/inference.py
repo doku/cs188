@@ -376,7 +376,7 @@ class ParticleFilter(InferenceModule):
         weights = DiscreteDistribution()
         for p in self.particles:
             #if type(p) is int:
-            print p
+            #print p
             weights[p] += self.getObservationProb(observation, pacPos, p, jailPos)
         
         if weights.total() == 0:
