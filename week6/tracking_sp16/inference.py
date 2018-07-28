@@ -382,8 +382,8 @@ class ParticleFilter(InferenceModule):
         if weights.total() == 0:
             self.initializeUniformly(gameState)
         else:
-            self.particles = weights.sample()
-            print self.particles
+            self.particles = [weights.sample() for i in self.particles]
+            #print self.particles
         
         
         
@@ -397,7 +397,14 @@ class ParticleFilter(InferenceModule):
         Sample each particle's next state based on its current state and the
         gameState.
         """
-        "*** YOUR CODE HERE ***"
+        newPart = []
+        #newDist = DiscreteDistribution()
+        for op in self.particles:
+            newPosDist = self.getPositionDistribution(gameState, op)
+            newPart.append(newPosDist.sample())
+            #for np, npp in newPosDist.items():
+            #    newDist[np] += self.beliefs[op] * npp
+        self.particle = newPart
 
     def getBeliefDistribution(self):
         """
